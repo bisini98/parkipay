@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkipay/constant/colors.dart';
+import 'package:parkipay/constant/AppConstants.dart';
 
 import '../constant/refactoring.dart';
 import 'Add_ParkingSlip.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkipay/constant/colors.dart';
+import 'package:parkipay/constant/AppConstants.dart';
 
 import '../constant/refactoring.dart';
 
@@ -35,12 +35,12 @@ class PaymentHistory extends StatelessWidget {
                   itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-                    child: paymentHistory(height, width,text[index],index==1?Colors.red:Colors.green),
+                    child: paymentHistory(height/0.88, width,text[index],index==1?Colors.red:Colors.green),
                   );
                 },),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 5),
               child: fillbtn(width/1.22, height/15, AppColors.btnColor, "View All", Colors.white),
             )
           ],

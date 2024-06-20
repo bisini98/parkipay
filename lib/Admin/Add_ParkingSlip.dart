@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkipay/Admin/Admin_Page.dart';
 import 'package:parkipay/Admin/Admin_ParkingSlip.dart';
-import 'package:parkipay/constant/colors.dart';
+import 'package:parkipay/constant/AppConstants.dart';
 import 'package:parkipay/constant/refactoring.dart';
 
 class AddParkingSlip extends StatelessWidget {

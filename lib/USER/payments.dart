@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkipay/USER/next_payment.dart';
 
-import '../constant/colors.dart';
+import '../constant/AppConstants.dart';
 import '../constant/refactoring.dart';
 
 class PaymentSlip extends StatelessWidget {

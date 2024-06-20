@@ -1,5 +1,6 @@
 import 'dart:ui';
-
+const double defaultPadding = 16.0;
+const Duration defaultDuration = Duration(milliseconds: 300);
 class AppColors{
   static final Color bgColor = const Color(0xff32435F);
   static final Color btnColor = const Color(0xffA67F78);
@@ -17,4 +18,8 @@ class AppColors{
   static final Color AdminpaymentcontainerColor = const Color(0xff57667E);
   static final Color AdminnumtxtcontainerColor = const Color(0xffC6BFBF);
   static final Color FilledcontainerColor = const Color(0xffBDB6B6);
+  static final Color redsnackbar = const Color(0xFFC72C41);
+  static final Color greensnackbar = const Color(0xFF0C4822);
+  static final Color orangesnackbar = const Color(0xFFF14A27);
+  static final Color lightgreensnackbar = const Color(0xFF0A8670);
 }

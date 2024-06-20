@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "235695125589",
+    "project_id": "parkipay-96837",
+    "storage_bucket": "parkipay-96837.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235695125589:android:b57a13375aebb87efa50dc",
+        "android_client_info": {
+          "package_name": "com.example.parkipay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2wMGiAyGbnZznqyC6654YVc5mPTFI2-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

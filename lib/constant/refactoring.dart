@@ -1,53 +1,83 @@
 
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:parkipay/constant/colors.dart';
+import 'package:parkipay/Provider/MainProvider.dart';
+import 'package:parkipay/constant/AppConstants.dart';
+import 'package:parkipay/constant/AuthScreen.dart';
+import 'package:provider/provider.dart';
+
+import '../Admin/Admin_CustomerList.dart';
+import 'LoginForm.dart';
 
 
 //................Login Page Button.......
-Widget button(double wth,double ht,Color btn1color,String txt,IconData icon,){
-  return Container(
-            width: wth,
-            height: ht,
-            alignment: Alignment.centerLeft,
-            decoration: BoxDecoration(
-                color: btn1color,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 6,
-                      offset: Offset(0, 2)
-                  )
-                ]
+Widget loginForm(double wth,double ht,Color btn1color,String txt,IconData icon,TextEditingController controller,){
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: wth * 0.50,
+    ),
+    child: Form(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Spacer(),
+          // Container(
+          //   width: wth,
+          //   height: ht,
+          //   decoration: BoxDecoration(
+          //       color: AppColors.btnColor,
+          //       borderRadius: BorderRadius.circular(10)
+          //   ),
+          //   child: Icon(icon),
+          //
+          // ),
+          TextFormField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: txt
             ),
-             child: Row(
-               children: [
-                 Container(
-                   width: 50,
-                   height: ht,
-                   decoration: BoxDecoration(
-                       color: AppColors.btnColor,
-                       borderRadius: BorderRadius.circular(10)
-                   ),
-                   child: Icon(icon),
-
-                 ),
-                 Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 12),
-                   child: TextFormField(
-                     keyboardType: TextInputType.number,
-                     decoration: InputDecoration(
-                       border: InputBorder.none,
-                       hintText: txt
-                     ),
-                   ),
-                 ))
-
-               ],
-             )
-        );
+          ),
+          SizedBox(height: ht,),
+          Container(
+            height: ht,
+            width: wth*10,
+            decoration: BoxDecoration(
+              color: AppColors.btnColor,
+            ),
+            child: Center(child: Text("LOGIN",style: TextStyle(fontWeight: FontWeight.w800),)),
+          ),
+          Spacer(flex: 2,),
+        ],
+      ),
+    ),
+  );
 }
-Widget personbutton(double wth,double ht,Color btn1color,String txt,IconData icon,){
+Widget signupForm(double wth,double ht,Color btn1color,String txt,IconData icon,TextEditingController controller,){
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: wth * 0.13
+    ),
+    child: Form(
+        child: Column(
+          children: [
+            Spacer(),
+
+          ],
+        )
+    ),
+  );
+}
+Widget socialIcons(String image){
+  return IconButton(
+    onPressed: () {},
+    icon: Image.asset(image,scale:4,),
+  );
+}
+Widget personbutton(double wth,double ht,Color btn1color,String txt,IconData icon,TextEditingController controller){
   return Container(
       width: wth,
       height: ht,
@@ -77,6 +107,7 @@ Widget personbutton(double wth,double ht,Color btn1color,String txt,IconData ico
           ),
           Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 12),
             child: TextFormField(
+              controller: controller,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -320,14 +351,14 @@ Widget quarterContainerWithIcon(double height,double width, txt){
         children: [
           Icon(Icons.arrow_back_ios_rounded,color: Colors.white,size: 15,),
           SizedBox(width: width/4,),
-          Center(child: Text(txt,style: TextStyle(color: Colors.white),)),
+          Text(txt,style: TextStyle(color: Colors.white),),
         ],
       ),
     ),
   );
 }
 
-Widget numbertxtfrm(hyt,wdt,String text) {
+Widget numbertxtfrm(hyt,wdt,String text,) {
   return Container(
     height: hyt/16,
     width: wdt/1.10,
@@ -336,6 +367,33 @@ Widget numbertxtfrm(hyt,wdt,String text) {
         border: Border.all(color: Color(0xff6E6B69),),
     ),
     child: TextFormField(
+      // controller: controller,
+      keyboardType: TextInputType.number,
+      // showCursor: false,
+      decoration: InputDecoration(border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(7)),
+        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        fillColor: Colors.white,
+        filled: true,
+        hintText: text,
+        hintStyle: TextStyle(
+            color: Color(0xffAB9B9B), fontSize: 10,),
+      ),
+
+    ),
+  );
+}
+Widget rownumbertxtfrm(hyt,wdt,String text,TextEditingController controller) {
+  return Container(
+    height: hyt/16,
+    width: wdt/1.10,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(7),
+      border: Border.all(color: Color(0xff6E6B69),),
+    ),
+    child: TextFormField(
+      controller: controller,
       keyboardType: TextInputType.number,
 
       decoration: InputDecoration(border: OutlineInputBorder(
@@ -346,7 +404,7 @@ Widget numbertxtfrm(hyt,wdt,String text) {
         filled: true,
         hintText: text,
         hintStyle: TextStyle(
-            color: Color(0xffAB9B9B), fontSize: 10,),
+          color: Color(0xffAB9B9B), fontSize: 10,),
       ),
 
     ),
@@ -425,6 +483,41 @@ Widget txtfrm(hyt,wdt,String text) {
           color: Color(0xffAB9B9B), fontSize: 10,),
       ),
 
+
+    ),
+  );
+}
+Widget admintxtfrm(hyt,wdt,String text,TextEditingController controller) {
+  return Container(
+    height: hyt/12,
+    width: wdt/1.10,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(7),
+      // border: Border.all(color: Color(0xff6E6B69),),
+    ),
+    child: TextFormField(
+
+      controller: controller,
+      textAlign: TextAlign.center,
+      keyboardType: TextInputType.text,
+
+      decoration: InputDecoration(border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(7)),
+        // contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        fillColor: AppColors.btnColor,
+        filled: true,
+
+        hintText: text,
+        hintStyle: TextStyle(
+
+          color: Colors.white, fontSize: 15,fontWeight: FontWeight.bold),
+      ),
+      validator: (value) {
+        if(value!.isEmpty){
+          return "* this field is required";
+        }else{}
+      },
     ),
   );
 }
@@ -695,7 +788,56 @@ Widget paymentHistory (double height, double width,String txt,Color color){
          );
 }
 
-Widget halfContainerAdmin(double height, double wth){
+//.............Admin Home Container
+
+Widget AdminHomeContainerWithIcon(double height,double width,String admintext,IconData icon){
+  return Container(
+      height: height/4,
+      width: width/3,
+      decoration: BoxDecoration(
+        color:AppColors.AdminContColor,
+        borderRadius: BorderRadius.circular(5)
+  ),
+   child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon,color: Colors.white,),
+            SizedBox(height: 5,),
+            Text(textAlign: TextAlign.center,admintext,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 12,shadows: [
+              Shadow(
+                color: Colors.black.withOpacity(0.7),
+                offset: Offset(2,6),
+                blurRadius: 10
+                )
+            ]),)
+    ],),
+  );
+}
+Widget AdminHomeContainerWithImg(double height,double width,String admintext,String img,double size){
+  return Container(
+    height: height/4,
+    width: width/3,
+    decoration: BoxDecoration(
+        color:AppColors.AdminContColor,
+        borderRadius: BorderRadius.circular(5)
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(img,color: Colors.white,scale: size,),
+        SizedBox(height: 5,),
+        Text(textAlign: TextAlign.center,admintext,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 12,shadows: [
+          Shadow(
+              color: Colors.black.withOpacity(0.7),
+              offset: Offset(2,6),
+              blurRadius: 10
+          )
+        ]),)
+      ],),
+  );
+}
+
+Widget halfContainerAdmin(double height, double wth,BuildContext context){
   return Container(
     height: height/2.75,
     width: wth,
@@ -713,7 +855,72 @@ Widget halfContainerAdmin(double height, double wth){
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(Icons.logout_outlined,color: AppColors.btnColor,),
+                  InkWell(onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        backgroundColor: AppColors.btnColor,
+                        elevation: 20,
+                        content:  Text(
+                            "Do you want to Logout ?",style: TextStyle(
+                            fontSize:17,
+
+                            fontFamily:'ink nut',
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white)),
+                        actions: <Widget>[
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  FirebaseAuth auth = FirebaseAuth.instance;
+                                  auth.signOut();
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthScreen(),));
+                                },
+                                child: Container(
+                                  height: 45,
+                                  width: 90,
+                                  decoration: BoxDecoration(
+                                      color:Colors.white ,
+                                      borderRadius: BorderRadius.circular(8),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Color(0x26000000),
+                                          blurRadius: 2.0, // soften the shadow
+                                          spreadRadius: 1.0, //extend the shadow
+                                        ),
+                                      ] ),
+                                  child: Center(child:  Text("yes",style: TextStyle( color: Colors.black,fontSize: 17,fontWeight: FontWeight.w700))),
+                                ),
+                              ),
+                              TextButton(
+                                  onPressed: (){
+                                     Navigator.pop(context);                                  },
+                                  child: Container(
+                                    height: 45,
+                                    width: 90,
+
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: AppColors.bgColor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Color(0x26000000),
+                                          blurRadius: 2.0, // soften the shadow
+                                          spreadRadius: 1.0, //extend the shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(child: Text("No",style: TextStyle( color: Colors.black,fontSize: 17,fontWeight: FontWeight.w700))),
+                                  ))
+                            ],
+                          )
+
+                        ],
+                      ),
+                    );
+                  },
+                      child: Icon(Icons.logout_outlined,color: AppColors.btnColor,)),
                 ],
               ),
             ),
@@ -730,72 +937,110 @@ Widget halfContainerAdmin(double height, double wth){
         ),
   );
 }
-Widget loginrequestcontainer(double height,double width){
+Widget halfContainerStaff(double height, double wth,BuildContext context){
   return Container(
-    height: height/4,
-    width: width/1.22,
+    height: height/2.75,
+    width: wth,
     decoration: BoxDecoration(
-      color:AppColors.AdminLoginRequestColor,
-      borderRadius: BorderRadius.circular(10)
+        color: AppColors.bgColor,
+        borderRadius: BorderRadius.only(bottomRight: Radius.circular(10),bottomLeft: Radius.circular(10))
     ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Name",style: TextStyle(color: Colors.white),),
-                SizedBox(width: 5,),
-                Text(":",style: TextStyle(color: Colors.white)),
-                SizedBox(width: 10,),
-                Text("Ram",style: TextStyle(color: Colors.white)),
-              ],
-            ),
-          ),
-          SizedBox(height: 5,),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Phone",style: TextStyle(color: Colors.white),),
-                SizedBox(width: 5,),
-                Text(":",style: TextStyle(color: Colors.white)),
-                SizedBox(width: 10,),
-                Text("9495432187",style: TextStyle(color: Colors.white)),
-              ],
-            ),
-          ),
-          SizedBox(height: height/20,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: height/15,
-                width: width/3.55,
-                decoration: BoxDecoration(
-                  color: Color(0xff61B853),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Center(child: Text("Accept",style: TextStyle(color: Colors.white),)),
-              ),
-              SizedBox(width: 10,),
-              Container(
-                height: height/15,
-                width: width/3.55,
-                decoration: BoxDecoration(
-                  color: Color(0xffC62727),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Center(child: Text("Accept",style: TextStyle(color: Colors.white),)),
-              )
-            ],
-          )
-        ],
-      ),
 
+    child:Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+
+        Padding(
+          padding: const EdgeInsets.only(right: 20,bottom: 80),
+          child: Row(
+             // crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: defaultPadding),
+                child: CircleAvatar(
+                    radius: 40,
+                    backgroundColor: AppColors.btnColor,
+                    backgroundImage: AssetImage("assets/Rectangle.png")
+                ),
+              ),
+              InkWell(onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    backgroundColor: AppColors.btnColor,
+                    elevation: 20,
+                    content:  Text(
+                        "Do you want to Logout ?",style: TextStyle(
+                        fontSize:17,
+
+                        fontFamily:'ink nut',
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white)),
+                    actions: <Widget>[
+                      Row(
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              FirebaseAuth auth = FirebaseAuth.instance;
+                              auth.signOut();
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthScreen(),));
+                            },
+                            child: Container(
+                              height: 45,
+                              width: 90,
+                              decoration: BoxDecoration(
+                                  color:Colors.white ,
+                                  borderRadius: BorderRadius.circular(8),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x26000000),
+                                      blurRadius: 2.0, // soften the shadow
+                                      spreadRadius: 1.0, //extend the shadow
+                                    ),
+                                  ] ),
+                              child: Center(child:  Text("yes",style: TextStyle( color: Colors.black,fontSize: 17,fontWeight: FontWeight.w700))),
+                            ),
+                          ),
+                          TextButton(
+                              onPressed: (){
+                                Navigator.pop(context);                                  },
+                              child: Container(
+                                height: 45,
+                                width: 90,
+
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: AppColors.bgColor,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x26000000),
+                                      blurRadius: 2.0, // soften the shadow
+                                      spreadRadius: 1.0, //extend the shadow
+                                    ),
+                                  ],
+                                ),
+                                child: Center(child: Text("No",style: TextStyle( color: Colors.black,fontSize: 17,fontWeight: FontWeight.w700))),
+                              ))
+                        ],
+                      )
+
+                    ],
+                  ),
+                );
+              },
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: defaultPadding),
+                    child: Icon(Icons.logout_outlined,color: AppColors.btnColor,),
+                  )),
+            ],
+          ),
+        ),
+
+        SizedBox(height: 5,),
+        Text("Hello,Staff",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w400),),
+      ],
+    ),
   );
 }
 
@@ -1014,12 +1259,14 @@ Widget mapSpotContainer(double height,double width){
   );
 }
 
-Widget mapListContainer (double height,double width,text){
+Widget mapListContainer (double height,double width,String text,Color myColor,){
+
   return Container(
     height: height/15,
     width: width/7,
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: myColor,
+
       borderRadius: BorderRadius.circular(5),
       border: Border.all(color: AppColors.bgColor)
     ),

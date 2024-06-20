@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constant/colors.dart';
+import '../constant/AppConstants.dart';
 import '../constant/refactoring.dart';
 
 class PaymentFailedPage extends StatelessWidget {
