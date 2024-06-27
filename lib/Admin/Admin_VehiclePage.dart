@@ -65,7 +65,7 @@ class AdminVehiclePage extends StatelessWidget {
             SizedBox(height: height/10,),
             SizedBox(
               width: width,
-              height: height/4.50,
+              height: height/3.80,
               child: Consumer<MainProvider>(
                 builder: (context,value,child) {
                   print(value.VehicleList.length.toString()+'hi');

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../Model/ModelClass.dart';
@@ -356,7 +357,7 @@ class _ShowMapAdminState extends State<ShowMapAdmin> {
                         itemCount: mainItem.rowCountList.length,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: ScrollPhysics(),
                         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         itemBuilder: (context, index) {
                           RowColumnCountModel countItem = mainItem.rowCountList[index];
@@ -367,26 +368,33 @@ class _ShowMapAdminState extends State<ShowMapAdmin> {
                               children: [
                                 Row(
                                   children: [
-                                    SizedBox(
-                                      height: height / 10,
-                                      width: width / 1.11,
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.horizontal,
-                                        physics: ScrollPhysics(),
-                                        itemCount: countItem.fieldsList.length,
-                                        itemBuilder: (context, fieldIndex) {
-                                          RowColumnFieldModel fieldModel = countItem.fieldsList[fieldIndex];
-                                          return Padding(
-                                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-                                            child: mapListContainer(
-                                              height,
-                                              width,
-                                              fieldModel.fieldName.toString(),
-                                              Colors.white,
-                                            ),
-                                          );
-                                        },
+                                    Flexible(
+                                      child: SizedBox(
+                                        height: height / 10,
+                                        width: width,
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.horizontal,
+                                          physics: ScrollPhysics(),
+                                          itemCount: countItem.fieldsList.length,
+                                          itemBuilder: (context, fieldIndex) {
+                                            RowColumnFieldModel fieldModel = countItem.fieldsList[fieldIndex];
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                                              child: Container(
+                                                height: height/15,
+                                                width: width/7,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                      
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    border: Border.all(color: AppColors.bgColor)
+                                                ),
+                                                child: Center(child: Text(fieldModel.fieldName.toString(),style: TextStyle(color: AppColors.bgColor,fontSize: 15,fontWeight: FontWeight.w600),)),
+                                              )
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -406,7 +414,7 @@ class _ShowMapAdminState extends State<ShowMapAdmin> {
                           itemCount: mainItem.columnCountList.length,
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: ScrollPhysics(),
                           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                           itemBuilder: (context, index) {
                             RowColumnCountModel countItem = mainItem.columnCountList[index];
@@ -415,26 +423,33 @@ class _ShowMapAdminState extends State<ShowMapAdmin> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    height: height / 1.05,
-                                    width: width / 5,
-                                    child: ListView.builder(
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.vertical,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: countItem.fieldsList.length,
-                                      itemBuilder: (context, fieldIndex) {
-                                        RowColumnFieldModel fieldModel = countItem.fieldsList[fieldIndex];
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-                                          child: mapListContainer(
-                                            height,
-                                            width,
-                                            fieldModel.fieldName.toString(),
-                                            Colors.white,
-                                          ),
-                                        );
-                                      },
+                                  Flexible(
+                                    child: SizedBox(
+                                      height: height / 1.05,
+                                      width: width / 5,
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: countItem.fieldsList.length,
+                                        itemBuilder: (context, fieldIndex) {
+                                          RowColumnFieldModel fieldModel = countItem.fieldsList[fieldIndex];
+                                          return Padding(
+                                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                                            child:Container(
+                                              height: height/15,
+                                              width: width/7,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                    
+                                                  borderRadius: BorderRadius.circular(5),
+                                                  border: Border.all(color: AppColors.bgColor)
+                                              ),
+                                              child: Center(child: Text(fieldModel.fieldName.toString(),style: TextStyle(color: AppColors.bgColor,fontSize: 15,fontWeight: FontWeight.w600),)),
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ],

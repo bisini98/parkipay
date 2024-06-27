@@ -13,8 +13,9 @@ class VehiclePage extends StatelessWidget {
   String Profilename;
   String userId;
   String registerphoneNumber;
+  String storeWithFieald;
 
-   VehiclePage({super.key,required this.categoryid,required this.storeId,required this.Signupphoto,required this.Profilename,required this.userId,required this.registerphoneNumber});
+   VehiclePage({super.key,required this.categoryid,required this.storeId,required this.Signupphoto,required this.Profilename,required this.userId,required this.registerphoneNumber,required this.storeWithFieald,});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class VehiclePage extends StatelessWidget {
       ),
             SizedBox(height: 20,),
             SizedBox(
-              height: height/4.50,
+              height: height/3.80,
               // width: width/2,
               child: Consumer<MainProvider>(
                 builder: (context,value,child) {
@@ -88,6 +89,10 @@ class VehiclePage extends StatelessWidget {
                         return InkWell(onTap: () {
                           selectedindex=index;
                           print("ssjjdbhc"+storeId);
+
+                          // value.mapRowMainList[0].userBookName=storeWithFieald
+                          print("fdug"+value.mapRowMainList.length.toString());
+                          value.setUserSelectedSlot(storeWithFieald);
                           Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage(storeId: storeId,userId: userId,registerphoneNumber: registerphoneNumber,),));
                         },
                           child: Container(

@@ -17,9 +17,9 @@ class Bottombar extends StatefulWidget {
   String Profilename;
   String Profilephone;
   String userId;
+  String storeWithFieald;
 
-
-  Bottombar({super.key,required this.categoryid,required this.storeId,required this.Signupphoto,required this.Profilename,required this.Profilephone,required this.userId});
+  Bottombar({super.key,required this.categoryid,required this.storeId,required this.Signupphoto,required this.Profilename,required this.Profilephone,required this.userId,required this.storeWithFieald,});
 
   @override
   State<Bottombar> createState() => _BottombarState();
@@ -43,7 +43,7 @@ class _BottombarState extends State<Bottombar> {
   @override
   Widget build(BuildContext context) {
     var pages = [
-      VehiclePage(categoryid:  widget.categoryid,storeId: widget.storeId,Signupphoto: widget.Signupphoto,Profilename: widget.Profilename,userId: widget.userId,registerphoneNumber: widget.Profilephone,),
+      VehiclePage(categoryid:  widget.categoryid,storeId: widget.storeId,Signupphoto: widget.Signupphoto,Profilename: widget.Profilename,userId: widget.userId,registerphoneNumber: widget.Profilephone, storeWithFieald:widget.storeWithFieald ,),
       Tickets(),
       PaymentSlip(),
       Profile(Signupphoto: widget.Signupphoto,Profilename: widget.Profilename,Profilephone: widget.Profilephone,),

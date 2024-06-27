@@ -101,7 +101,7 @@ class AdminPage extends StatelessWidget {
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => AdminParkingSlip(),));
                   },
-                    child: AdminHomeContainerWithImg(height/1.40, width, "Parking Slips","assets/ri-ticket-2-line.png",4)),
+                    child: AdminHomeContainerWithImg(height/1.40, width, "Add Staff","assets/ri-ticket-2-line.png",4)),
                 InkWell(
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPaymentList(),));

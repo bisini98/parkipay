@@ -10,8 +10,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parkipay/constant/AppConstants.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:intl/intl.dart';
 import '../Model/ModelClass.dart';
+import '../Model/ticket_model.dart';
+
 class MainProvider with ChangeNotifier{
   final FirebaseFirestore db = FirebaseFirestore.instance;
   Reference ref = FirebaseStorage.instance.ref("IMAGEURL");
@@ -1085,7 +1087,7 @@ void DeleteVehicle(id,BuildContext context) {
 
           String floorName = data["FLOOR_NAME"].toString();
           int floorNumber = int.parse(floorName.replaceAll(RegExp(r'\D'), '')); // Extract floor number
-          mapRowMainList.add(RowColumnMainModel(element.id, floorName, rowCountList, columnCountList, floorNumber)); // Include floorNumber
+          mapRowMainList.add(RowColumnMainModel(element.id, floorName, rowCountList, columnCountList, floorNumber,'')); // Include floorNumber
         }
 
         // Sort mapRowMainList by floorNumber
@@ -1100,6 +1102,140 @@ void DeleteVehicle(id,BuildContext context) {
     });
   }
 
+  int selectedFloorIndex = 0;
+  void indexChange(int index) {
+    selectedFloorIndex = index;
+    notifyListeners();
+  }
+
+  List<TicketModel> userTicketList=[];
+
+
+
+  void getUserTicket(String userId,BuildContext context){
+
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
+db.collection('REGISTRATION').doc(userId).get().then((value) {
+  if(value.exists){
+    userTicketList.clear();
+    Map<dynamic,dynamic> map = value.data() as Map;
+    db.collection('SLOT').doc(map['SLOT_ID']).get().then((value2) {
+      if(value2.exists){
+Map<dynamic,dynamic> map22 = value2.data() as Map;
+
+
+String laneLetter =  map22['FIELD_NAME'].substring(0, 2);
+
+RegExp regExp = RegExp(r'\d+$');
+Match? match = regExp.firstMatch( map22['FIELD_NAME'].toString());
+String lastNumbers='';
+if (match != null) {
+  lastNumbers = match.group(0)!;
+}
+String dateStr = '';
+String timeStr = '';
+if( map22['DATE']!=null) {
+  dateStr = DateFormat('yyyy-MM-dd').format( map22['DATE'].toDate());
+  timeStr = DateFormat.jm().format( map22['DATE'].toDate());
+}
+
+        userTicketList.add(TicketModel(map['SLOT_ID'].toString(),
+            userId, map22['STORE_ID']??"",  map22['FLOOR_NAME']??"", map22['FIELD_NAME']??"", laneLetter, lastNumbers, dateStr, timeStr,  map22['STATUS']??"CHECK IN", map22['DATE'].toDate()??DateTime.now()));
+// notifyListeners();
+      }
+      showDialog(
+          context: context,
+          builder: (context) =>
+              AlertDialog(
+                contentPadding: EdgeInsets.zero,
+                backgroundColor: Colors.white,
+                // elevation: 20,
+                content:userTicketList.isEmpty? CircularProgressIndicator():Container(
+                  // margin: EdgeInsets.only(bottom: 15),
+                  height: height/2.60,
+                  width: width,
+                  decoration: BoxDecoration(
+                      color: Colors.white
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        //margin: EdgeInsets.only(top: 20),
+                        height: height/10,
+                        width: height/10,
+                        decoration: BoxDecoration(
+                            color: AppColors.spotColor
+                        ),
+                        child: Center(child: Text(userTicketList[0].fiealdName,style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.w600,fontSize: 25),)),
+                      ),
+                      IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                                children: [
+                                  Icon(Icons.alarm,color: AppColors.bgColor,),
+                                  Text(userTicketList[0].time,style: TextStyle(color: AppColors.bgColor)),
+                                ]),
+                            VerticalDivider(
+                              color: AppColors.bgColor,
+                              width: 5,
+                              thickness: 1,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Parking Details:",style: TextStyle(color: AppColors.bgColor),),
+                                SizedBox(height: 5,),
+                                IntrinsicHeight(
+                                  child: Row(
+                                    children: [
+                                      Text("Floor.${userTicketList[0].floor}",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.bold),),
+                                      VerticalDivider(
+                                        color: AppColors.bgColor,
+                                        width: 10,
+                                        thickness: 2,
+                                      ),
+                                      Text("Lane.${userTicketList[0].lane}",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.bold),),
+                                      VerticalDivider(
+                                        color: AppColors.bgColor,
+                                        width: 10,
+                                        thickness: 2,
+                                      ),
+                                      Text("Pos.${userTicketList[0].position}",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.bold),),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          width: width*.5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Free parking for first 30 mins, afterwards ₹8/hr",style: TextStyle(fontSize: 12,color: AppColors.bgColor),textAlign:TextAlign.center ,),
+                          ),
+                        ),
+                      ),
+                      userTicketList[0].status=='CHECK IN'?SizedBox():  InkWell(
+                          onTap: (){},
+                          child: Text("Pay at exit",style: TextStyle(fontWeight: FontWeight.w600,color: AppColors.bgColor),)
+                      )
+                    ],
+                  ),
+                ),));
+    });
+    notifyListeners();
+  }
+});
+
+  }
 
   void clearMap(){
     RowCountcontroller.clear();
@@ -1159,7 +1295,7 @@ void DeleteVehicle(id,BuildContext context) {
     notifyListeners();
   }
 
-  Future<void>ticketSlot(String mapId,String userid,String registerPhone,String fieldName,String floorname) async{
+  Future<void>ticketSlot(String mapId,String userid,String registerPhone,String fieldName,String floorname,String storeId) async{
     String id = DateTime.now().microsecondsSinceEpoch.toString();
 
     if (id.isEmpty) {
@@ -1173,9 +1309,13 @@ void DeleteVehicle(id,BuildContext context) {
     slotmap["REGISTER_PHONE"]=registerPhone;
     slotmap["FIELD_NAME"]= fieldName;
     slotmap["FLOOR_NAME"] = floorname ;
+    slotmap["STORE_ID"] = storeId ;
+    slotmap["STATUS"] = "CHECK IN" ;
     slotmap["DATE"]= DateTime.now();
 
     db.collection("SLOT").doc(id).set(slotmap);
+    db.collection("REGISTRATION").doc(userid).set({"SLOT_ID":id,"MAP_ID":mapId,'FIELD_NAME':fieldName,'STORE_ID':storeId},SetOptions(merge: true));
+
     getticketslot(userid);
     notifyListeners();
 
@@ -1226,37 +1366,114 @@ void DeleteVehicle(id,BuildContext context) {
     ticketslotList = slots;
     notifyListeners();
   }
-  // Future<void> getticketslot(String storeId) async {
-  //   // Fetch data from the database
-  //   DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('TICKET_SLOTS').doc(storeId).get();
-  //
-  //   if (snapshot.exists) {
-  //     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-  //
-  //     // Ensure 'data' is not null before proceeding
-  //     if (data != null) {
-  //       List<String> ticketSlots = data.entries.map((entry) {
-  //         // Ensure the key is not null and is a string
-  //         final key = entry.key;
-  //         final value = entry.value;
-  //
-  //         if (key != null && value is String) {
-  //           return value;  // Ensure value is of type String
-  //         } else {
-  //           print('Found a null key or non-string value: $key - $value');
-  //           return ''; // Return an empty string or handle the null case as needed
-  //         }
-  //       }).toList();
-  //
-  //       // Process the ticket slots as needed
-  //       print(ticketSlots);
-  //     } else {
-  //       print('Data is null!');
-  //     }
-  //   } else {
-  //     print('Document does not exist!');
-  //   }
-  // }
-/// new addMap
+
+  void setUserSelectedSlot(String data){
+print("fvhfv"+data);
+    for(var ele in mapRowMainList){
+      ele.userBookName =data;
+    }
+    print(mapRowMainList[0].userBookName);
+    notifyListeners();
+  }
+
+  File? StaffFileImg =null;
+  String StaffImg='';
+
+  TextEditingController StaffNamecontroller = TextEditingController();
+  TextEditingController StaffPhonecontroller = TextEditingController();
+
+  Future<void>addStaff() async{
+    String id = DateTime.now().microsecondsSinceEpoch.toString();
+    HashMap<String, dynamic> staffmap = HashMap();
+    staffmap["STATUS"]="REQUEST";
+    staffmap["STAFF_ID"]=id;
+    staffmap["STAFF_NAME"]=StaffNamecontroller.text;
+    staffmap["STAFF_PHONE"]=StaffPhonecontroller.text;
+
+    if (StaffFileImg!= null) {
+      print("dxdc");
+
+      String photoId = DateTime.now().millisecondsSinceEpoch.toString();
+      ref = FirebaseStorage.instance.ref().child(photoId);
+      await ref.putFile(StaffFileImg! ).whenComplete(() async {
+        await ref.getDownloadURL().then((value) {
+          staffmap["STAFF_PHOTO"] = value;
+          notifyListeners();
+        });
+        notifyListeners();
+      });
+      notifyListeners();
+    } else {
+      staffmap['STAFF_PHOTO'] = StaffImg;
+      // editMap['IMAGE_URL'] = imageUrl;
+    }
+
+    db.collection("STAFF").doc(id).set(staffmap);
+    notifyListeners();
+  }
+  Future getStaffImggallery() async {
+    print("cdc");
+
+    final imagePicker = ImagePicker();
+    final pickedImage =
+    await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      cropSImage(pickedImage.path, "");
+    } else {
+      print('No image selected.');
+    }
+  }
+  Future getStaffImgcamera() async {
+    print("ffvjrvn");
+    final imgPicker = ImagePicker();
+    final pickedImage = await imgPicker.pickImage(source: ImageSource.camera);
+
+    if (pickedImage != null) {
+      cropSImage(pickedImage.path, "");
+    } else {
+      print('No image selected.');
+    }
+  }
+  Future<void> cropStaffImage(String path, String from) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: path,
+      aspectRatioPresets: Platform.isAndroid
+          ? [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9,
+      ]
+          : [
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio5x3,
+        CropAspectRatioPreset.ratio5x4,
+        CropAspectRatioPreset.ratio7x5,
+        CropAspectRatioPreset.ratio16x9,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.white,
+            toolbarWidgetColor: Colors.black,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        IOSUiSettings(
+          title: 'Cropper',
+        )
+      ],
+    );
+    if (croppedFile != null) {
+      StaffFileImg = File(croppedFile.path);
+      print(StaffFileImg.toString() + "fofiifi");
+      notifyListeners();
+    }
+  }
 
 }

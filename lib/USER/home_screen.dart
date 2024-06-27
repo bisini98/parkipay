@@ -12,10 +12,11 @@ class Home_screen extends StatelessWidget {
   String profileName;
   String profilePhone;
   String userId;
+  String storeWithFieald;
 
 
 
-   Home_screen({super.key,required this.photo,required this.profileName,required this.profilePhone,required this.userId,});
+   Home_screen({super.key,required this.photo,required this.profileName,required this.profilePhone,required this.userId,required this.storeWithFieald});
 
    List<String>images=[
      "assets/img.png",
@@ -62,7 +63,8 @@ class Home_screen extends StatelessWidget {
                   ),
                   itemBuilder: (BuildContext context, int index){
                     return InkWell(onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Bottombar(categoryid: value.CategoryList[index].id,storeId:value.CategoryList[index].id ,Signupphoto:photo ,Profilename: profileName,Profilephone: profilePhone,userId: userId,),));
+                      value.getMap(value.CategoryList[index].id);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Bottombar(categoryid: value.CategoryList[index].id,storeId:value.CategoryList[index].id ,Signupphoto:photo ,Profilename: profileName,Profilephone: profilePhone,userId: userId, storeWithFieald: storeWithFieald,),));
                     },
                       child: Stack(
                         children:[
@@ -77,7 +79,7 @@ class Home_screen extends StatelessWidget {
                             ),
                             ),
                           Positioned(
-                            top:171,
+                            bottom: 0,
                             child: Container(
                               height: height/15,
                               width: width/2.15,

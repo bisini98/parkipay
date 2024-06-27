@@ -149,7 +149,7 @@ class AdminHome extends StatelessWidget {
                                 ),
                               ),
                               Positioned(
-                                top:171,
+                                bottom: 0,
                                 child: Container(
                                   height: height/15,
                                   width: width/2.15,

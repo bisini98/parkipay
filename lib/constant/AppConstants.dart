@@ -9,7 +9,7 @@ class AppColors{
   static final Color iconColor = const Color(0xff837B7B);
   static final Color strockColor = const Color(0xff746E6E);
   static final Color textColor = const Color(0xff616060);
-  static final Color spotColor = const Color(0xffE1EBFC);
+    static final Color spotColor = const Color(0xffE1EBFC);
   static final Color navigationColor = const Color(0xff8398BA);
   static final Color dividerColor = const Color(0xffC7C7C8);
   static final Color AdminContColor = const Color(0xff8B8B8B);

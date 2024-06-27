@@ -53,7 +53,7 @@ class CustomSnackBarContent extends StatelessWidget {
                 child: SvgPicture.asset("assets/bubbles.svg",height: 48,width: 40,color: colorbubble))),
         Positioned(
             top: -14,
-            left: 10,
+            right: 10,
             child: Stack(
               alignment: Alignment.center,
               children: [

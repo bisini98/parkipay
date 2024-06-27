@@ -35,12 +35,9 @@ class RowColumnMainModel {
   List<RowColumnCountModel> columnCountList;
   String floorName;
   final int floorNumber;
-  RowColumnMainModel(this.id,this.floorName,this.rowCountList,this.columnCountList,this.floorNumber);
+  String userBookName;
+  RowColumnMainModel(this.id,this.floorName,this.rowCountList,this.columnCountList,this.floorNumber,this.userBookName);
 
-  @override
-  String toString() {
-    return 'RowColumnMainModel{floorName: $floorName, rowCountList: $rowCountList, columnCountList: $columnCountList, floorNumber: $floorNumber}';
-  }
 }
 class RowColumnCountModel {
   String name;
@@ -60,7 +57,8 @@ class RowColumnFieldModel {
   String columnName;
    String rowName;
    String mapId;
-  RowColumnFieldModel(this.fieldName,this.fieldStatus,this.fieldNumber,this.columnName,this.rowName,this.mapId);
+
+  RowColumnFieldModel(this.fieldName,this.fieldStatus,this.fieldNumber,this.columnName,this.rowName,this.mapId,);
 
   @override
   String toString() {

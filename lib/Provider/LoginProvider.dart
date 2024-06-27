@@ -149,15 +149,29 @@ class LoginProvider extends ChangeNotifier {
                 if(valueee.exists){
                   print("cxcjjjc"+valueee.id);
                   Map<dynamic, dynamic> customerMap = valueee.data() as Map;
-                  loginPhoto= customerMap["SIGNUP_PHOTO"].toString();
-                  print("dkdkdd");
-                  print("fefvb"+fieldName);
 
-                  mainProvider.getCategory();
-                  mainProvider.getVehicle();
-                  print("mxnxn");
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home_screen(photo: loginPhoto,profileName: loginUsername,profilePhone: loginphno,userId: userId,),));
-                }
+                  if(customerMap['STATUS']=='APPROVED') {
+                    String storeFieald='';
+                    loginPhoto = customerMap["SIGNUP_PHOTO"].toString();
+                    if(customerMap['FIELD_NAME']!=null && customerMap['FIELD_NAME']!='null' ){
+                      storeFieald =   customerMap['STORE_ID'].toString()+customerMap['FIELD_NAME'].toString();
+                    }
+
+
+                    print("fefvb" + fieldName);
+
+                    mainProvider.getCategory();
+                    mainProvider.getVehicle();
+                    print("mxnxn");
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Home_screen(
+                          photo: loginPhoto,
+                          profileName: loginUsername,
+                          profilePhone: loginphno,
+                          userId: userId, storeWithFieald: storeFieald,),));
+                  }else{
+                 // snack bar
+                  }    }
               });
               
               

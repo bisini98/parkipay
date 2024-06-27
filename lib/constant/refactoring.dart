@@ -1259,7 +1259,7 @@ Widget mapSpotContainer(double height,double width){
   );
 }
 
-Widget mapListContainer (double height,double width,String text,Color myColor,){
+Widget mapListContainer (double height,double width,String text,Color myColor,Color textColor){
 
   return Container(
     height: height/15,
@@ -1270,7 +1270,7 @@ Widget mapListContainer (double height,double width,String text,Color myColor,){
       borderRadius: BorderRadius.circular(5),
       border: Border.all(color: AppColors.bgColor)
     ),
-    child: Center(child: Text(text,style: TextStyle(color: AppColors.bgColor,fontSize: 15,fontWeight: FontWeight.w600),)),
+    child: Center(child: Text(text,style: TextStyle(color: textColor,fontSize: 15,fontWeight: FontWeight.w600),)),
   );
 }
 Widget PlaceVisitedContainer(double height, double width,){
