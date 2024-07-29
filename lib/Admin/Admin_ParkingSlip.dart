@@ -24,7 +24,7 @@ class AdminParkingSlip extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: [
-            quarterContainerWithIcon(height, width, "Parking Slip"),
+            quarterContainerWithIcon(height, width, "Parking Slip",context),
             //SizedBox(height: height/50,),
             SizedBox(
               height: height/1.22,
@@ -36,7 +36,7 @@ class AdminParkingSlip extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
 
-                  return parkingslip(height,width);
+                  // return parkingslip(height,width);
                 },
               ),
             ),

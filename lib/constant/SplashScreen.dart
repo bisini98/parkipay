@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
         print("ghmmmmmj" + loginUser.toString());
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AuthScreen()),
+          MaterialPageRoute(builder: (context) => AuthScreen(from: "",)),
         );
       } else {
         print("user existtttttt" + loginUser.toString());

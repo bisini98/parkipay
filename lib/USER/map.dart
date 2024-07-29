@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:parkipay/USER/bottom_navigation.dart';
 import 'package:parkipay/USER/parking_slip.dart';
 import 'package:parkipay/constant/AppConstants.dart';
 import 'package:parkipay/constant/CustomSnackBarContent.dart';
@@ -12,40 +13,26 @@ import 'package:provider/provider.dart';
 
 import '../Model/ModelClass.dart';
 import '../Provider/MainProvider.dart';
+import 'Vehicle_page.dart';
 
 class MapPage extends StatefulWidget {
 
   final String storeId;
   String userId;
   String registerphoneNumber;
+  String storeWithFieald;
+  String categoryid;
+  String signupPhoto;
+  String profileName;
 
-  MapPage({Key? key, required this.storeId,required this.userId,required this.registerphoneNumber,}) : super(key: key);
+
+  MapPage({Key? key, required this.storeId,required this.userId,required this.registerphoneNumber,required this.storeWithFieald,required this.categoryid,required this.signupPhoto,required this.profileName}) : super(key: key);
 
   @override
   _ShowMapAdminState createState() => _ShowMapAdminState();
 }
 
 class _ShowMapAdminState extends State<MapPage> {
-
-  // String floorMapId = "";
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     Provider.of<MainProvider>(context, listen: false).getMap(widget.storeId);
-  //     print("asiffff");
-  //     // var mapList = Provider.of<MainProvider>(context, listen: false).mapRowMainList;
-  //     // if (mapList.isNotEmpty) {
-  //     //   floorMapId = mapList[0].id;
-  //     // } else {
-  //     //   // Handle the case where mapList is empty
-  //     //   // You can show an error message or set a default value for floorMapId
-  //     //   print("Map list is empty!");
-  //     // }
-  //     // floorMapId = Provider.of<MainProvider>(context, listen: false).mapRowMainList[0].id;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +55,7 @@ print("fyguf"+mainprovider.mapRowMainList[0].userBookName);
         backgroundColor: AppColors.bgColor,
         leading: InkWell(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Bottombar(categoryid:widget.categoryid, storeId: widget.storeId, Signupphoto: widget.signupPhoto, Profilename: widget.profileName, Profilephone: widget.registerphoneNumber, userId: widget.userId, storeWithFieald: widget.storeWithFieald,),));
           },
           child: Icon(
             Icons.arrow_back_ios_rounded,
@@ -143,206 +130,411 @@ print("fyguf"+mainprovider.mapRowMainList[0].userBookName);
                         'FLOOR ${mainItem?.floorName ?? 'Unknown'}',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      ListView.builder(
-                        itemCount: mainItem.rowCountList.length,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.symmetric(horizontal: 5, vertical:5),
-                        itemBuilder: (context, index) {
-                          RowColumnCountModel countItem = mainItem.rowCountList[index];
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      // ListView.builder(
+                      //   itemCount: mainItem.rowCountList.length,
+                      //   shrinkWrap: true,
+                      //   scrollDirection: Axis.vertical,
+                      //   physics: NeverScrollableScrollPhysics(),
+                      //   padding: EdgeInsets.symmetric(horizontal: 5, vertical:5),
+                      //   itemBuilder: (context, index) {
+                      //     RowColumnCountModel countItem = mainItem.rowCountList[index];
+                      //     return Padding(
+                      //       padding: const EdgeInsets.all(8.0),
+                      //       child: Column(
+                      //         crossAxisAlignment: CrossAxisAlignment.start,
+                      //         children: [
+                      //           Row(
+                      //             children: [
+                      //               Flexible(
+                      //                 child: SizedBox(
+                      //                   height: height / 10,
+                      //                   width: width,
+                      //                   child: ListView.builder(
+                      //                     shrinkWrap: true,
+                      //                     scrollDirection: Axis.horizontal,
+                      //                     physics: ScrollPhysics(),
+                      //                     itemCount: countItem.fieldsList.length,
+                      //                     itemBuilder: (context, fieldIndex) {
+                      //                       RowColumnFieldModel fieldModel = countItem.fieldsList[fieldIndex];
+                      //                       return Padding(
+                      //                         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                      //                         child: GestureDetector(
+                      //                           onTap: () {
+                      //
+                      //                             if(mainItem.userBookName=='') {
+                      //                               showDialog(
+                      //                                 context: context,
+                      //                                 builder: (context) =>
+                      //                                     AlertDialog(
+                      //                                       backgroundColor: AppColors.btnColor,
+                      //                                       elevation: 20,
+                      //                                       content: Text(
+                      //                                           "Do you want to select ?",
+                      //                                           style: TextStyle(
+                      //                                               fontSize: 17,
+                      //                                               fontFamily: 'ink nut',
+                      //                                               fontWeight: FontWeight.w700,
+                      //                                               color: AppColors.bgColor)),
+                      //                                       actions: <Widget>[
+                      //                                         Row(
+                      //                                           children: [
+                      //                                             TextButton(
+                      //                                               onPressed: () {
+                      //                                                 print("ndjdfjdfjfj" + fieldModel.mapId);
+                      //                                                 print("hiij" + widget.storeId);
+                      //                                                 print("hello" + fieldModel.columnName);
+                      //                                                 print("vsssm" + fieldModel.fieldName);
+                      //
+                      //                                                 value.ticketSlot(fieldModel.mapId, widget.userId, widget.registerphoneNumber, fieldModel.fieldName, mainItem.floorName, widget.storeId,context);
+                      //                                                 value.updateMap(fieldModel.mapId, widget.storeId, fieldModel.rowName, fieldModel.fieldName, "FILLED");
+                      //                                                 value.setUserSelectedSlot(widget.storeId+fieldModel.fieldName);
+                      //                                                 // value.updateMap(fieldModel.mapId,'COLUMN',fieldModel.fieldName,countItem.name);
+                      //
+                      //                                                 setState(() {
+                      //                                                   print(
+                      //                                                       "dsmhgfhs");
+                      //
+                      //
+                      //                                                   if (fieldModel.fieldStatus == 'VACANT') {
+                      //                                                     fieldModel.fieldStatus = 'SELECTED';
+                      //                                                   } else
+                      //                                                   if (fieldModel.fieldStatus == 'SELECTED') {
+                      //                                                     fieldModel.fieldStatus = 'VACANT';
+                      //                                                   }
+                      //                                                 });
+                      //                                                 Navigator
+                      //                                                     .pushReplacement(
+                      //                                                     context,
+                      //                                                     MaterialPageRoute(
+                      //                                                       builder: (
+                      //                                                           context) =>
+                      //                                                           ParkingSlip(storeId: widget.storeId,
+                      //                                                             userId: widget.userId,
+                      //                                                             registerphoneNumber: widget.registerphoneNumber,
+                      //                                                             fieldName: fieldModel.fieldName,
+                      //                                                             floorName: mainItem?.floorName ?? 'Unknown',),
+                      //                                                     ));
+                      //                                               },
+                      //                                               child: Container(
+                      //                                                 height: 45,
+                      //                                                 width: 90,
+                      //                                                 decoration: BoxDecoration(
+                      //                                                   color: AppColors
+                      //                                                       .btn1Color,
+                      //                                                   borderRadius: BorderRadius
+                      //                                                       .circular(
+                      //                                                       8),
+                      //                                                   // boxShadow: [
+                      //                                                   //   BoxShadow(
+                      //                                                   //     // color: Color(0x26000000),
+                      //                                                   //     blurRadius: 2.0, // soften the shadow
+                      //                                                   //     spreadRadius: 1.0, //extend the shadow
+                      //                                                   //   ),
+                      //                                                   // ]
+                      //                                                 ),
+                      //                                                 child: const Center(
+                      //                                                     child: Text(
+                      //                                                         "yes",
+                      //                                                         style: TextStyle(
+                      //                                                             color: Colors
+                      //                                                                 .black,
+                      //                                                             fontSize: 17,
+                      //                                                             fontWeight: FontWeight
+                      //                                                                 .w700))),
+                      //                                               ),
+                      //                                             ),
+                      //                                             TextButton(
+                      //                                                 onPressed: () {
+                      //                                                   Navigator
+                      //                                                       .pop(
+                      //                                                       context);
+                      //                                                 },
+                      //                                                 child: Container(
+                      //                                                   height: 45,
+                      //                                                   width: 90,
+                      //                                                   decoration: BoxDecoration(
+                      //                                                     borderRadius: BorderRadius
+                      //                                                         .circular(
+                      //                                                         8),
+                      //                                                     color: AppColors
+                      //                                                         .bgColor,
+                      //                                                     boxShadow: const [
+                      //                                                       BoxShadow(
+                      //                                                         // color: Color(0x26000000),
+                      //                                                         blurRadius: 2.0,
+                      //                                                         // soften the shadow
+                      //                                                         spreadRadius: 1.0, //extend the shadow
+                      //                                                       ),
+                      //                                                     ],
+                      //                                                   ),
+                      //                                                   child: const Center(
+                      //                                                       child: Text(
+                      //                                                           "No",
+                      //                                                           style: TextStyle(
+                      //                                                               color: Colors
+                      //                                                                   .black,
+                      //                                                               fontSize: 17,
+                      //                                                               fontWeight: FontWeight
+                      //                                                                   .w700))),
+                      //                                                 ))
+                      //                                           ],
+                      //                                         )
+                      //                                       ],
+                      //                                     ),
+                      //                               );
+                      //                             } else{
+                      //                               print("fffffg"+widget.storeId+fieldModel.fieldName);
+                      //                               if(mainItem.userBookName==widget.storeId+fieldModel.fieldName) {
+                      //
+                      //                                 value.getUserTicket(widget.userId,context);
+                      //
+                      //
+                      //                               }else {
+                      //                                 ScaffoldMessenger.of(context)
+                      //                                     .showSnackBar(SnackBar(
+                      //                                   content: CustomSnackBarContent(
+                      //                                     colorcontainer: Colors.orange,
+                      //                                     errorHeadline: "Warning!",
+                      //                                     errorText: "Already exist",
+                      //                                     colorbubble: AppColors.orangesnackbar,
+                      //                                     img: "assets/exclamation.svg",),
+                      //                                   behavior: SnackBarBehavior.floating,
+                      //                                   duration: Duration(milliseconds: 3000),
+                      //                                   backgroundColor: Colors.transparent,
+                      //                                   elevation: 0,
+                      //
+                      //                                 ));
+                      //                               }
+                      //                             }
+                      //
+                      //                             // value.updateMap(floorMapId, widget.storeId,
+                      //                             //     fieldModel.rowcolumnName,fieldModel.fieldName,"FILLED");
+                      //                           },
+                      //                           child: mapListContainer(
+                      //                             height,
+                      //                             width,
+                      //                             fieldModel.fieldName.toString(),
+                      //                             mainItem.userBookName==widget.storeId+fieldModel.fieldName?AppColors.bgColor:  fieldModel.fieldStatus == 'FILLED' ? AppColors.FilledcontainerColor :
+                      //                             Colors.white,mainItem.userBookName==widget.storeId+fieldModel.fieldName?Colors.white:AppColors.bgColor,
+                      //                           ),
+                      //                         ),
+                      //                       );
+                      //                     },
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
+                  ListView.builder(
+                    itemCount: mainItem.rowCountList.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    itemBuilder: (context, index) {
+                      RowColumnCountModel countItem = mainItem.rowCountList[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Flexible(
-                                      child: SizedBox(
-                                        height: height / 10,
-                                        width: width,
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          physics: ScrollPhysics(),
-                                          itemCount: countItem.fieldsList.length,
-                                          itemBuilder: (context, fieldIndex) {
-                                            RowColumnFieldModel fieldModel = countItem.fieldsList[fieldIndex];
-                                            return Padding(
-                                              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                      
-                                                  if(mainItem.userBookName=='') {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          AlertDialog(
-                                                            backgroundColor: AppColors.btnColor,
-                                                            elevation: 20,
-                                                            content: Text(
-                                                                "Do you want to select ?",
-                                                                style: TextStyle(
-                                                                    fontSize: 17,
-                                                                    fontFamily: 'ink nut',
-                                                                    fontWeight: FontWeight.w700,
-                                                                    color: AppColors.bgColor)),
-                                                            actions: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  TextButton(
-                                                                    onPressed: () {
-                                                                      print("ndjdfjdfjfj" + fieldModel.mapId);
-                                                                      print("hiij" + widget.storeId);
-                                                                      print("hello" + fieldModel.columnName);
-                                                                      print("vsssm" + fieldModel.fieldName);
-                                      
-                                                                      value.ticketSlot(fieldModel.mapId, widget.userId, widget.registerphoneNumber, fieldModel.fieldName, mainItem.floorName, widget.storeId);
-                                                                      value.updateMap(fieldModel.mapId, widget.storeId, fieldModel.rowName, fieldModel.fieldName, "FILLED");
-                                      
-                                                                      // value.updateMap(fieldModel.mapId,'COLUMN',fieldModel.fieldName,countItem.name);
-                                      
-                                                                      setState(() {
-                                                                        print(
-                                                                            "dsmhgfhs");
-                                      
-                                      
-                                                                        if (fieldModel.fieldStatus == 'VACANT') {
-                                                                          fieldModel.fieldStatus = 'SELECTED';
-                                                                        } else
-                                                                        if (fieldModel.fieldStatus == 'SELECTED') {
-                                                                          fieldModel.fieldStatus = 'VACANT';
-                                                                        }
-                                                                      });
-                                                                      Navigator
-                                                                          .pushReplacement(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                            builder: (
-                                                                                context) =>
-                                                                                ParkingSlip(storeId: widget.storeId,
-                                                                                  userId: widget.userId,
-                                                                                  registerphoneNumber: widget.registerphoneNumber,
-                                                                                  fieldName: fieldModel.fieldName,
-                                                                                  floorName: mainItem?.floorName ?? 'Unknown',),
-                                                                          ));
-                                                                    },
-                                                                    child: Container(
-                                                                      height: 45,
-                                                                      width: 90,
-                                                                      decoration: BoxDecoration(
-                                                                        color: AppColors
-                                                                            .btn1Color,
-                                                                        borderRadius: BorderRadius
-                                                                            .circular(
-                                                                            8),
-                                                                        // boxShadow: [
-                                                                        //   BoxShadow(
-                                                                        //     // color: Color(0x26000000),
-                                                                        //     blurRadius: 2.0, // soften the shadow
-                                                                        //     spreadRadius: 1.0, //extend the shadow
-                                                                        //   ),
-                                                                        // ]
-                                                                      ),
-                                                                      child: const Center(
-                                                                          child: Text(
-                                                                              "yes",
-                                                                              style: TextStyle(
-                                                                                  color: Colors
-                                                                                      .black,
-                                                                                  fontSize: 17,
-                                                                                  fontWeight: FontWeight
-                                                                                      .w700))),
-                                                                    ),
+                                Flexible(
+                                  child: SizedBox(
+                                    height: height / 10,
+                                    width: width,
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      physics: ScrollPhysics(),
+                                      itemCount: countItem.fieldsList.length,
+                                      itemBuilder: (context, fieldIndex) {
+                                        RowColumnFieldModel fieldModel = countItem.fieldsList[fieldIndex];
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              if (mainItem.userBookName.isEmpty) {
+                                                // Show dialog for selection
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) => AlertDialog(
+                                                    backgroundColor: AppColors.btnColor,
+                                                    elevation: 20,
+                                                    content: Text(
+                                                      "Do you want to select?",
+                                                      style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontFamily: 'ink nut',
+                                                        fontWeight: FontWeight.w700,
+                                                        color: AppColors.bgColor,
+                                                      ),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      Row(
+                                                        children: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              // Handle selection confirmation
+                                                              value.ticketSlot(
+                                                                fieldModel.mapId,
+                                                                widget.userId,
+                                                                widget.registerphoneNumber,
+                                                                fieldModel.fieldName,
+                                                                mainItem.floorName,
+                                                                widget.storeId,
+                                                                "ROW",
+                                                                context,
+                                                              );
+                                                              value.updateMap(
+                                                                fieldModel.mapId,
+                                                                widget.storeId,
+                                                                fieldModel.columnName,
+                                                                fieldModel.fieldName,
+                                                                "FILLED",
+                                                              );
+                                                              value.setUserSelectedSlot(widget.storeId + fieldModel.fieldName);
+
+                                                              setState(() {
+                                                                // Update field status
+                                                                if (fieldModel.fieldStatus == 'VACANT') {
+                                                                  fieldModel.fieldStatus = 'SELECTED';
+                                                                } else if (fieldModel.fieldStatus == 'SELECTED') {
+                                                                  fieldModel.fieldStatus = 'VACANT';
+                                                                }
+                                                              });
+
+                                                              // Navigate to ParkingSlip page
+                                                              Navigator.pushReplacement(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) => ParkingSlip(
+                                                                    storeId: widget.storeId,
+                                                                    userId: widget.userId,
+                                                                    registerphoneNumber: widget.registerphoneNumber,
+                                                                    fieldName: fieldModel.fieldName,
+                                                                    floorName: mainItem?.floorName ?? 'Unknown',
+                                                                    signupPhoto: widget.signupPhoto,
+                                                                    profileName: widget.profileName,
+                                                                    storeWithField: widget.storeWithFieald,
+                                                                    categoryId: widget.categoryid,
+
                                                                   ),
-                                                                  TextButton(
-                                                                      onPressed: () {
-                                                                        Navigator
-                                                                            .pop(
-                                                                            context);
-                                                                      },
-                                                                      child: Container(
-                                                                        height: 45,
-                                                                        width: 90,
-                                                                        decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius
-                                                                              .circular(
-                                                                              8),
-                                                                          color: AppColors
-                                                                              .bgColor,
-                                                                          boxShadow: const [
-                                                                            BoxShadow(
-                                                                              // color: Color(0x26000000),
-                                                                              blurRadius: 2.0,
-                                                                              // soften the shadow
-                                                                              spreadRadius: 1.0, //extend the shadow
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        child: const Center(
-                                                                            child: Text(
-                                                                                "No",
-                                                                                style: TextStyle(
-                                                                                    color: Colors
-                                                                                        .black,
-                                                                                    fontSize: 17,
-                                                                                    fontWeight: FontWeight
-                                                                                        .w700))),
-                                                                      ))
-                                                                ],
-                                                              )
-                                                            ],
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              height: 45,
+                                                              width: 90,
+                                                              decoration: BoxDecoration(
+                                                                color: AppColors.btn1Color,
+                                                                borderRadius: BorderRadius.circular(8),
+                                                              ),
+                                                              child: const Center(
+                                                                child: Text(
+                                                                  "Yes",
+                                                                  style: TextStyle(
+                                                                    color: Colors.black,
+                                                                    fontSize: 17,
+                                                                    fontWeight: FontWeight.w700,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
                                                           ),
-                                                    );
-                                                  } else{
-                                                    if(mainItem.userBookName==widget.storeId+fieldModel.fieldName) {
-                                      
-                                                      value.getUserTicket(widget.userId,context);
-                                      
-                                      
-                                                    }else {
-                                                      ScaffoldMessenger.of(context)
-                                                          .showSnackBar(SnackBar(
-                                                        content: CustomSnackBarContent(
-                                                          colorcontainer: Colors.orange,
-                                                          errorHeadline: "Warning!",
-                                                          errorText: "Already exist",
-                                                          colorbubble: AppColors.orangesnackbar,
-                                                          img: "assets/exclamation.svg",),
-                                                        behavior: SnackBarBehavior.floating,
-                                                        duration: Duration(milliseconds: 3000),
-                                                        backgroundColor: Colors.transparent,
-                                                        elevation: 0,
-                                      
-                                                      ));
-                                                    }
-                                                  }
-                                      
-                                                  // value.updateMap(floorMapId, widget.storeId,
-                                                  //     fieldModel.rowcolumnName,fieldModel.fieldName,"FILLED");
-                                                },
-                                                child: mapListContainer(
-                                                  height,
-                                                  width,
-                                                  fieldModel.fieldName.toString(),
-                                                  mainItem.userBookName==widget.storeId+fieldModel.fieldName?Colors.red:  fieldModel.fieldStatus == 'FILLED' ? AppColors.FilledcontainerColor :
-                                                  Colors.white,mainItem.userBookName==widget.storeId+fieldModel.fieldName?Colors.white:AppColors.bgColor,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              // Dismiss dialog on "No"
+                                                              Navigator.pop(context);
+                                                            },
+                                                            child: Container(
+                                                              height: 45,
+                                                              width: 90,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(8),
+                                                                color: AppColors.bgColor,
+                                                                boxShadow: const [
+                                                                  BoxShadow(
+                                                                    blurRadius: 2.0,
+                                                                    spreadRadius: 1.0,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              child: const Center(
+                                                                child: Text(
+                                                                  "No",
+                                                                  style: TextStyle(
+                                                                    color: Colors.black,
+                                                                    fontSize: 17,
+                                                                    fontWeight: FontWeight.w700,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              } else {
+                                                // Handle already booked slot
+                                                if (mainItem.userBookName == widget.storeId + fieldModel.fieldName) {
+                                                  value.getUserTicket(widget.userId, context);
+                                                } else {
+                                                  // Show SnackBar for already booked slot
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    SnackBar(
+                                                      content: CustomSnackBarContent(
+                                                        colorcontainer: Colors.orange,
+                                                        errorHeadline: "Warning!",
+                                                        errorText: "Already booked",
+                                                        colorbubble: AppColors.orangesnackbar,
+                                                        img: "assets/exclamation.svg",
+                                                      ),
+                                                      behavior: SnackBarBehavior.floating,
+                                                      duration: Duration(milliseconds: 3000),
+                                                      backgroundColor: Colors.transparent,
+                                                      elevation: 0,
+                                                    ),
+                                                  );
+                                                }
+                                              }
+                                            },
+                                            child: mapListContainer(
+                                              height,
+                                              width,
+                                              fieldModel.fieldName.toString(),
+                                              mainItem.userBookName == widget.storeId + fieldModel.fieldName
+                                                  ? AppColors.bgColor
+                                                  : fieldModel.fieldStatus == 'FILLED'
+                                                  ? AppColors.FilledcontainerColor
+                                                  : Colors.white,
+                                              mainItem.userBookName == widget.storeId + fieldModel.fieldName
+                                                  ? Colors.white
+                                                  : AppColors.bgColor,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ],
                             ),
-                          );
-                        },
-                      ),
-                      SizedBox(
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+
+                  SizedBox(
                         height: height / 1,
                         width: width,
                         child: ListView.builder(
@@ -400,9 +592,9 @@ print("fyguf"+mainprovider.mapRowMainList[0].userBookName);
                                                                     print("hello" + fieldModel.columnName);
                                                                     print("vsssm" + fieldModel.fieldName);
                                     
-                                                                    value.ticketSlot(fieldModel.mapId, widget.userId, widget.registerphoneNumber, fieldModel.fieldName, mainItem.floorName, widget.storeId);
+                                                                    value.ticketSlot(fieldModel.mapId, widget.userId, widget.registerphoneNumber, fieldModel.fieldName, mainItem.floorName, widget.storeId,"COLUMN",context);
                                                                     value.updateMap(fieldModel.mapId, widget.storeId, fieldModel.columnName, fieldModel.fieldName, "FILLED");
-                                    
+                                                                    value.setUserSelectedSlot(widget.storeId+fieldModel.fieldName);
                                                                     // value.updateMap(fieldModel.mapId,'COLUMN',fieldModel.fieldName,countItem.name);
                                     
                                                                     setState(() {
@@ -427,7 +619,13 @@ print("fyguf"+mainprovider.mapRowMainList[0].userBookName);
                                                                                 userId: widget.userId,
                                                                                 registerphoneNumber: widget.registerphoneNumber,
                                                                                 fieldName: fieldModel.fieldName,
-                                                                                floorName: mainItem?.floorName ?? 'Unknown',),
+                                                                                floorName: mainItem?.floorName ?? 'Unknown',
+                                                                                categoryId: widget.categoryid,
+                                                                                storeWithField: widget.storeWithFieald,
+                                                                                profileName: widget.profileName,
+                                                                                signupPhoto: widget.signupPhoto,
+
+                                                                              ),
                                                                         ));
                                                                   },
                                                                   child: Container(

@@ -47,7 +47,7 @@ class AddVehiclePage extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)
                         ),
-                        child: Image.file(value.VehicleFileImg!,)
+                        child: Image.file(value.VehicleFileImg!,fit: BoxFit.cover,)
                     ):value.VehicleImage!=""?Container(
                         height: height/4,
                         width: width/2,
@@ -55,7 +55,7 @@ class AddVehiclePage extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)
                         ),
-                        child: Image.network(value.VehicleImage)
+                        child: Image.network(value.VehicleImage,fit: BoxFit.cover,)
                     ):addImgcontainer(height/1.22,width/1.22));
               }
             )),

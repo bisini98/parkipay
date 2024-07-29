@@ -14,8 +14,12 @@ class ParkingSlip extends StatelessWidget {
   String registerphoneNumber;
   String fieldName;
   String floorName;
+  String storeWithField;
+  String categoryId;
+  String profileName;
+  String signupPhoto;
 
-   ParkingSlip({super.key,required this.storeId,required this.userId,required this.registerphoneNumber,required this.fieldName,required this.floorName,});
+   ParkingSlip({super.key,required this.storeId,required this.userId,required this.registerphoneNumber,required this.fieldName,required this.floorName,required this.storeWithField,required this.categoryId,required this.profileName,required this.signupPhoto,});
 
   @override
   Widget build(BuildContext context) {
@@ -126,11 +130,15 @@ class ParkingSlip extends StatelessWidget {
                     Text("Free parking for first 30 mins, afterwards ₹8/hr",style: TextStyle(fontSize: 12,color: AppColors.bgColor),),
                   ],
                 ),
-                InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentSlip(),));
-                    },
-                    child: Text("Pay at exit",style: TextStyle(fontWeight: FontWeight.w600,color: AppColors.bgColor),)
+                Consumer<MainProvider>(
+                  builder: (context,value,child) {
+                    return InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentSlip(checkinDate: null,checkoutDate: null,fieldName: fieldName,),));
+                        },
+                        child: Text("Pay at exit",style: TextStyle(fontWeight: FontWeight.w600,color: AppColors.bgColor),)
+                    );
+                  }
                 )
               ],
             ),
@@ -140,11 +148,16 @@ class ParkingSlip extends StatelessWidget {
           SizedBox(height: height/20,),
           Text("Check SMS/Whatsapp to view parking slip",style: TextStyle(color: AppColors.bgColor),),
       SizedBox(height: height/30,),
-      GestureDetector(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage(storeId: storeId,userId: userId,registerphoneNumber: registerphoneNumber),));
-        },
-          child: fillbtn(width/1.22, height/15, AppColors.btnColor, "View Map",Colors.white)
+      Consumer<MainProvider>(
+        builder: (context,value,child) {
+          return GestureDetector(
+            onTap: () {
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage(storeId: storeId,userId: userId,registerphoneNumber: registerphoneNumber,storeWithFieald: storeWithField,profileName: profileName,signupPhoto: signupPhoto,categoryid: categoryId,),));
+            },
+              child: fillbtn(width/1.22, height/15, AppColors.btnColor, "View Map",Colors.white)
+          );
+        }
       )
 
         ],

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:parkipay/Admin/Admin_Page.dart';
+import 'package:parkipay/STAFF/userStatus.dart';
 import 'package:parkipay/USER/home_screen.dart';
 import 'package:parkipay/constant/AppConstants.dart';
 import 'package:parkipay/constant/CustomSnackBarContent.dart';
@@ -117,15 +118,17 @@ class LoginProvider extends ChangeNotifier {
     String loginphno="";
     String loginPhoto="";
 
+
     MainProvider mainProvider = Provider.of<MainProvider>(context, listen: false);
 
     try {
       var phone = phoneNumber!;
-      print(phoneNumber.toString()+"duudud"+loginUsertype);
+      print(phoneNumber.toString()+"duudud");
       db.collection("USERS").where("PHONE_NUMBER",isEqualTo:phone).get().then((value) {
         if(value.docs.isNotEmpty){
           print("fiifuif");
           for(var element in value.docs) {
+            print(element.id+' JNRJRF');
             Map<dynamic, dynamic> map = element.data();
             loginUsername = map['USER_NAME'].toString();
             loginUsertype = map['TYPE'].toString();
@@ -138,14 +141,16 @@ class LoginProvider extends ChangeNotifier {
               print("cb bcb");
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AdminPage(),));
             }else if(loginUsertype=='STAFF'){
-
-
+               mainProvider.getUserTicketSlots();
+               mainProvider.tabInitialIndex=0;
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => UserStatus(),));
             }
             else {
               print("efvhjbfjv"+userId);
               print("mxnxn");
 
               db.collection("REGISTRATION").doc(element.id).get().then((valueee){
+                print("dfdfdf");
                 if(valueee.exists){
                   print("cxcjjjc"+valueee.id);
                   Map<dynamic, dynamic> customerMap = valueee.data() as Map;
@@ -153,6 +158,7 @@ class LoginProvider extends ChangeNotifier {
                   if(customerMap['STATUS']=='APPROVED') {
                     String storeFieald='';
                     loginPhoto = customerMap["SIGNUP_PHOTO"].toString();
+
                     if(customerMap['FIELD_NAME']!=null && customerMap['FIELD_NAME']!='null' ){
                       storeFieald =   customerMap['STORE_ID'].toString()+customerMap['FIELD_NAME'].toString();
                     }
@@ -162,16 +168,18 @@ class LoginProvider extends ChangeNotifier {
 
                     mainProvider.getCategory();
                     mainProvider.getVehicle();
-                    print("mxnxn");
+                    // mainProvider.getUsersticketslot();
+                    print("njjjjjjj"+loginUsername);
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Home_screen(
+                        MaterialPageRoute(builder: (context) => HomeScreen(
                           photo: loginPhoto,
                           profileName: loginUsername,
                           profilePhone: loginphno,
-                          userId: userId, storeWithFieald: storeFieald,),));
+                          userId: userId, storeWithFieald: storeFieald,
+
+                        ),));
                   }else{
-                 // snack bar
-                  }    }
+                        print("vghbnhmbn")  ;                }    }
               });
               
               

@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+
 class CategoryModel{
   String id;
   String name;
@@ -55,16 +58,17 @@ class RowColumnFieldModel {
   int fieldNumber;
   dynamic fieldStatus;
   String columnName;
-   String rowName;
-   String mapId;
+  String rowName;
+  String mapId;
 
-  RowColumnFieldModel(this.fieldName,this.fieldStatus,this.fieldNumber,this.columnName,this.rowName,this.mapId,);
+  RowColumnFieldModel(this.fieldName, this.fieldStatus, this.fieldNumber, this.columnName, this.rowName, this.mapId);
 
   @override
   String toString() {
-    return 'RowColumnFieldModel{fieldName: $fieldName, fieldStatus: $fieldStatus, fieldNumber: $fieldNumber}';
+    return 'RowColumnFieldModel{fieldName: $fieldName, fieldNumber: $fieldNumber, fieldStatus: $fieldStatus, columnName: $columnName, rowName: $rowName, mapId: $mapId}';
   }
 }
+
 class ticketslotModel{
   String id;
   String userId;
@@ -72,11 +76,65 @@ class ticketslotModel{
   String fieldName;
   String floorName;
   DateTime date;
+  DateTime checkoutDate;
+  String status;
 
-  ticketslotModel(this.id,this.userId,this.phone,this.fieldName,this.floorName,this.date);
+  ticketslotModel(this.id,this.userId,this.phone,this.fieldName,this.floorName,this.date,this.checkoutDate,this.status);
 
 }
+class userticketslotModel{
+  String id;
+  String userId;
+  String userName;
+  String phone;
+  String fieldName;
+  String mapId;
+  String mapType;
+  String status;
+  DateTime checkoutDate;
 
 
+  userticketslotModel(this.id,this.userId,this.userName,this.phone,this.fieldName,this.mapId,this.mapType,this.status,this.checkoutDate,);
+
+}
+// class StaffModel{
+//   String id;
+//   String name;
+//   String phone;
+//   String storename;
+//   String storenameid;
+//   String photo;
+//   StaffModel(this.id,this.name,this.phone,this.storename,this.storenameid,this.photo);
+// }
+
+class StaffModel {
+  String id;
+  String name;
+  String phone;
+  String storename;
+  String storenameid;
+  String photo;
+
+  StaffModel(
+      this.id,
+      this.name,
+      this.phone,
+      this.storename,
+      this.storenameid,
+      this.photo
+      );
+
+  factory StaffModel.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map;
+    return StaffModel(
+      doc.id,
+      data['name'] ?? '',
+      data['phone'] ?? '',
+      data['storename'] ?? '',
+      data['storenameid'] ?? '',
+      data['photo'] ?? '',
+    );
+  }
+}
 
 

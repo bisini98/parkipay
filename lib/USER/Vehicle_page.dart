@@ -15,10 +15,12 @@ class VehiclePage extends StatelessWidget {
   String registerphoneNumber;
   String storeWithFieald;
 
-   VehiclePage({super.key,required this.categoryid,required this.storeId,required this.Signupphoto,required this.Profilename,required this.userId,required this.registerphoneNumber,required this.storeWithFieald,});
+
+   VehiclePage({super.key,required this.categoryid,required this.storeId,required this.Signupphoto,required this.Profilename,required this.userId,required this.registerphoneNumber,required this.storeWithFieald, });
 
   @override
   Widget build(BuildContext context) {
+    print("cdcdcdc"+Profilename);
     int selectedindex=0;
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
@@ -92,8 +94,9 @@ class VehiclePage extends StatelessWidget {
 
                           // value.mapRowMainList[0].userBookName=storeWithFieald
                           print("fdug"+value.mapRowMainList.length.toString());
+                          print("$storeWithFieald kjhkjgfvkjg");
                           value.setUserSelectedSlot(storeWithFieald);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage(storeId: storeId,userId: userId,registerphoneNumber: registerphoneNumber,),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage(storeId: storeId,userId: userId,registerphoneNumber: registerphoneNumber, storeWithFieald: storeWithFieald,categoryid: categoryid,signupPhoto: Signupphoto,profileName: Profilename,),));
                         },
                           child: Container(
                             margin: EdgeInsets.all(8),

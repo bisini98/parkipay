@@ -335,7 +335,7 @@ Widget quarterContainer(double height,double width, txt){
     child: Center(child: Text(txt,style: TextStyle(color: Colors.white),)),
   );
 }
-Widget quarterContainerWithIcon(double height,double width, txt){
+Widget quarterContainerWithIcon(double height,double width, txt,BuildContext context){
 
   return Container(
     height: height/5,
@@ -349,7 +349,11 @@ Widget quarterContainerWithIcon(double height,double width, txt){
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(Icons.arrow_back_ios_rounded,color: Colors.white,size: 15,),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+              child: Icon(Icons.arrow_back_ios_rounded,color: Colors.white,size: 15,)),
           SizedBox(width: width/4,),
           Text(txt,style: TextStyle(color: Colors.white),),
         ],
@@ -521,84 +525,126 @@ Widget admintxtfrm(hyt,wdt,String text,TextEditingController controller) {
     ),
   );
 }
-
-Widget parkingslip (double height, double width){
+Widget adminnubfrm(hyt,wdt,String text,TextEditingController controller) {
   return Container(
-    margin: EdgeInsets.only(bottom: 15),
-    height: height/2.60,
-    width: width/1.20,
+    height: hyt/12,
+    width: wdt/1.10,
     decoration: BoxDecoration(
-        color: Colors.white
+      borderRadius: BorderRadius.circular(7),
+      // border: Border.all(color: Color(0xff6E6B69),),
     ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Container(
-          //margin: EdgeInsets.only(top: 20),
-          height: height/10,
-          width: height/10,
-          decoration: BoxDecoration(
-            color: AppColors.spotColor
-          ),
-          child: Center(child: Text("A2",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.w600,fontSize: 25),)),
-        ),
-        IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                children: [
-                  Icon(Icons.alarm,color: AppColors.bgColor,),
-                  Text("11:10 AM",style: TextStyle(color: AppColors.bgColor)),
-                  ]),
-              VerticalDivider(
-                color: AppColors.bgColor,
-                width: 20,
-                thickness: 1,
-              ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Parking Details:",style: TextStyle(color: AppColors.bgColor),),
-                      SizedBox(height: 5,),
-                      IntrinsicHeight(
-                        child: Row(
-                          children: [
-                            Text("Floor 1",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.bold),),
-                            VerticalDivider(
-                              color: AppColors.bgColor,
-                              width: 20,
-                              thickness: 2,
-                            ),
-                            Text("Lane A",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.bold),),
-                            VerticalDivider(
-                              color: AppColors.bgColor,
-                              width: 20,
-                              thickness: 2,
-                            ),
-                            Text("Pos.2",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.bold),),
-                          ],
-                        ),
-                      ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Free parking for first 30 mins, afterwards ₹8/hr",style: TextStyle(fontSize: 12,color: AppColors.bgColor),),
-          ],
-        ),
-        InkWell(
-          onTap: (){},
-            child: Text("Pay at exit",style: TextStyle(fontWeight: FontWeight.w600,color: AppColors.bgColor),)
-        )
-      ],
+    child: TextFormField(
+
+      controller: controller,
+      textAlign: TextAlign.center,
+      keyboardType: TextInputType.number,
+
+      decoration: InputDecoration(border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(7)),
+        // contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        fillColor: AppColors.btnColor,
+        filled: true,
+
+        hintText: text,
+        hintStyle: TextStyle(
+
+          color: Colors.white, fontSize: 15,fontWeight: FontWeight.bold),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter a phone number';
+        }
+        if (!RegExp(r'^\+?\d{10,15}$').hasMatch(value)) {
+          return 'Please enter a valid phone number';
+        }
+        return null;
+      },
     ),
   );
 }
+
+// Widget parkingslip (double height, double width,){
+//   return Container(
+//     margin: EdgeInsets.only(bottom: 15),
+//     height: height/2.60,
+//     width: width/1.20,
+//     decoration: BoxDecoration(
+//         color: Colors.white
+//     ),
+//     child: Column(
+//       mainAxisAlignment: MainAxisAlignment.spaceAround,
+//       children: [
+//         Consumer<MainProvider>(
+//           builder: (context,value,child) {
+//             return Container(
+//               //margin: EdgeInsets.only(top: 20),
+//               height: height/10,
+//               width: height/10,
+//               decoration: BoxDecoration(
+//                 color: AppColors.spotColor
+//               ),
+//               child: Center(child: Text("skjfkj",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.w600,fontSize: 25),)),
+//             );
+//           }
+//         ),
+//         IntrinsicHeight(
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceAround,
+//             children: [
+//               Column(
+//                 children: [
+//                   Icon(Icons.alarm,color: AppColors.bgColor,),
+//                   Text("11:10 AM",style: TextStyle(color: AppColors.bgColor)),
+//                   ]),
+//               VerticalDivider(
+//                 color: AppColors.bgColor,
+//                 width: 20,
+//                 thickness: 1,
+//               ),
+//                   Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Text("Parking Details:",style: TextStyle(color: AppColors.bgColor),),
+//                       SizedBox(height: 5,),
+//                       IntrinsicHeight(
+//                         child: Row(
+//                           children: [
+//                             Text("Floor 1",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.bold),),
+//                             VerticalDivider(
+//                               color: AppColors.bgColor,
+//                               width: 20,
+//                               thickness: 2,
+//                             ),
+//                             Text("Lane A",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.bold),),
+//                             VerticalDivider(
+//                               color: AppColors.bgColor,
+//                               width: 20,
+//                               thickness: 2,
+//                             ),
+//                             Text("Pos.2",style: TextStyle(color: AppColors.bgColor,fontWeight: FontWeight.bold),),
+//                           ],
+//                         ),
+//                       ),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Text("Free parking for first 30 mins, afterwards ₹8/hr",style: TextStyle(fontSize: 12,color: AppColors.bgColor),),
+//           ],
+//         ),
+//         InkWell(
+//           onTap: (){},
+//             child: Text("Pay at exit",style: TextStyle(fontWeight: FontWeight.w600,color: AppColors.bgColor),)
+//         )
+//       ],
+//     ),
+//   );
+// }
 
 Widget adminparkingslip (double height, double width){
   return Container(
@@ -875,7 +921,7 @@ Widget halfContainerAdmin(double height, double wth,BuildContext context){
                                 onPressed: () {
                                   FirebaseAuth auth = FirebaseAuth.instance;
                                   auth.signOut();
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthScreen(),));
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthScreen(from: "",),));
                                 },
                                 child: Container(
                                   height: 45,
@@ -984,7 +1030,7 @@ Widget halfContainerStaff(double height, double wth,BuildContext context){
                             onPressed: () {
                               FirebaseAuth auth = FirebaseAuth.instance;
                               auth.signOut();
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthScreen(),));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthScreen(from: "",),));
                             },
                             child: Container(
                               height: 45,

@@ -23,7 +23,7 @@ class AdminPaymentList extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: [
-            quarterContainerWithIcon(height, width, "Payments"),
+            quarterContainerWithIcon(height, width, "Payments",context),
             SizedBox(
               height: height/1.22,
               child: ListView.builder(

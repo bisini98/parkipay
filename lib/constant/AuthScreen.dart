@@ -13,7 +13,9 @@ import '../Provider/LoginProvider.dart';
 import 'AppConstants.dart';
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+  String from;
+
+  AuthScreen({super.key,required this.from});
 
   @override
   State<AuthScreen> createState() => AuthScreenState();
@@ -206,7 +208,7 @@ class AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateMi
                                     );
                                     return;
                                   }if(value.SignUpImg!= null){
-                                  value.AddRegistration();
+                                  value.AddRegistration("NEW","",context,'');
                                   value.SignUpclear();
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(

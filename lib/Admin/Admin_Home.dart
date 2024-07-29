@@ -43,7 +43,7 @@ class AdminHome extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            quarterContainerWithIcon(height, width, "Home Screen"),
+            quarterContainerWithIcon(height, width, "Home Screen",context),
             Consumer<MainProvider>(
               builder: (context,value,child) {
                 return value.gethomescreenLoader?Center(child: CircularProgressIndicator(color: Colors.blue,)):GridView.builder(
@@ -175,4 +175,5 @@ class AdminHome extends StatelessWidget {
       ),
     );
   }
+
 }

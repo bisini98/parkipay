@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:parkipay/Admin/Admin_Page.dart';
 import 'package:parkipay/Provider/LoginProvider.dart';
 import 'package:parkipay/Provider/MainProvider.dart';
+import 'package:parkipay/STAFF/userStatus.dart';
 import 'package:parkipay/constant/AppConstants.dart';
 import 'package:parkipay/constant/AuthScreen.dart';
+import 'package:parkipay/constant/SplashScreen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
             )
           ),
         ),
-        home:AdminPage(),
+        home:SplashScreen(),
       ),
     );
   }

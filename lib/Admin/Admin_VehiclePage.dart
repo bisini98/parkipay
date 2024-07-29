@@ -52,7 +52,7 @@ class AdminVehiclePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            quarterContainerWithIcon(height, width, "Categories"),
+            quarterContainerWithIcon(height, width, "Categories",context),
             SizedBox(height: height/35,),
             Padding(
               padding: const EdgeInsets.only(left: 20),

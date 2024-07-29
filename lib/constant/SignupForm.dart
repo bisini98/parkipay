@@ -187,9 +187,11 @@ class SignUpForm extends StatelessWidget {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter Name';
+                          return 'Please enter a phone number';
                         }
-                        // Add more validation logic if needed
+                        if (!RegExp(r'^\+?\d{10,15}$').hasMatch(value)) {
+                          return 'Please enter a valid phone number';
+                        }
                         return null;
                       },
                     ),

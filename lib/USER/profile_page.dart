@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:parkipay/Provider/MainProvider.dart';
+import 'package:parkipay/USER/editProfile.dart';
 import 'package:parkipay/USER/payment_history.dart';
 import 'package:parkipay/constant/AppConstants.dart';
 import 'package:parkipay/constant/AuthScreen.dart';
+import 'package:parkipay/constant/SignupForm.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,10 +13,12 @@ import '../constant/LoginForm.dart';
 import '../constant/refactoring.dart';
 
 class Profile extends StatelessWidget {
+  String userId;
   String Signupphoto;
   String Profilename;
   String Profilephone;
-  Profile({super.key,required this.Signupphoto,required this.Profilename,required this.Profilephone});
+  String storeWithFieald;
+  Profile({super.key,required this.userId,required this.Signupphoto,required this.Profilename,required this.Profilephone,required this.storeWithFieald});
 
 
 
@@ -38,17 +42,6 @@ class Profile extends StatelessWidget {
                 backgroundImage: NetworkImage(
                   Signupphoto.toString()
                 ),
-                child: Container(
-                  margin: EdgeInsets.only(left: 80, top: 50),
-                  height: 20,
-                  width: 20,
-                  color: Color(0xff6B4DE2),
-                  child: Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                    size: 15,
-                  ),
-                ),
               );
             }
           ),
@@ -56,7 +49,7 @@ class Profile extends StatelessWidget {
             height: 10,
           ),
           Text(
-            Profilename.toString(),
+            Profilename,
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
           SizedBox(
@@ -71,10 +64,21 @@ class Profile extends StatelessWidget {
               Icons.account_circle,
               color: AppColors.bgColor,
             ),
-            title: Text(
-              "Edit Profile",
-              style: TextStyle(
-                  color: AppColors.bgColor, fontWeight: FontWeight.normal),
+            title: Consumer<MainProvider>(
+              builder: (context,value,child) {
+                return InkWell(
+                  onTap: (){
+                    value.EditRegistration(userId);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile(from: "EDIT",oldid:userId,userId:userId,Signupphoto: Signupphoto,Profilename: Profilename,Profilephone: Profilephone, storeWithFieald: storeWithFieald,),));
+                  },
+                  child: Text(
+                    "Edit Profile",
+                    style: TextStyle(
+                        color: AppColors.bgColor, fontWeight: FontWeight.normal),
+                  ),
+
+                );
+              }
             ),
           ),
           ListTile(
@@ -247,7 +251,7 @@ class Profile extends StatelessWidget {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => AuthScreen(),
+                                  builder: (context) => AuthScreen(from: "",),
                                 ));
                           },
                           child: Container(

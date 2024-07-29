@@ -39,7 +39,7 @@ class AddHomeScreen extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)
                       ),
-                      child: Image.file(value.homeScreenFileImg!)
+                      child: Image.file(value.homeScreenFileImg!,fit: BoxFit.cover,)
                     ):value.Image!=""?Container(
                     height: height/4,
                     width: width/2,
@@ -47,7 +47,7 @@ class AddHomeScreen extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10)
                     ),
-                    child: Image.network(value.Image)
+                    child: Image.network(value.Image,fit: BoxFit.cover,)
                 ):addImgcontainer(height,width));
               }
             )),
@@ -63,7 +63,8 @@ class AddHomeScreen extends StatelessWidget {
               builder: (context,value,child) {
                 return InkWell(
                   onTap: () {
-                    final FormState? form = formKey.currentState;
+                    final FormState?
+                    form = formKey.currentState;
                     if(form!.validate()) {
                       if(value.homeScreenFileImg!= null || value.Image!="")  {
                         print("jhbjhgh" + oldid);

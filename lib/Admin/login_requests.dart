@@ -20,7 +20,7 @@ class LoginRequests extends StatelessWidget {
        // physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
-          quarterContainerWithIcon(height, width, "Login Requests"),
+          quarterContainerWithIcon(height, width, "Login Requests",context),
             SizedBox(
               height: height/1.22,
 

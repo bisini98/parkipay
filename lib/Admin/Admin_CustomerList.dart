@@ -15,10 +15,10 @@ class AdminCustomerList extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.btn1Color,
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: ScrollPhysics(),
         child: Column(
           children: [
-            quarterContainerWithIcon(height, width, "Customers"),
+            quarterContainerWithIcon(height, width, "Customers",context),
            // SizedBox(height: height/20,),
             Consumer<MainProvider>(
                 builder: (context,val,child) {
